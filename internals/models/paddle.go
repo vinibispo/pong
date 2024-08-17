@@ -16,7 +16,8 @@ func NewPaddle(x, y, width, height float32, speed int32) *Paddle {
 }
 
 func (p *Paddle) Draw() {
-	rl.DrawRectangle(int32(p.X), int32(p.Y), int32(p.Width), int32(p.Height), rl.White)
+	rect := rl.Rectangle{X: p.X, Y: p.Y, Width: p.Width, Height: p.Height}
+	rl.DrawRectangleRounded(rect, 0.8, 0, rl.White)
 }
 
 func (p *Paddle) GetY() float32 {

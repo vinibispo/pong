@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	screenWidth  = 1280
-	screenHeight = 800
+	screenWidth  = 800
+	screenHeight = 600
 	ballRadius   = 20
 )
 
