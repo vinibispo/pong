@@ -3,9 +3,9 @@ package main
 import rl "github.com/gen2brain/raylib-go/raylib"
 
 const (
-	screenWidth  = 800
-	screenHeight = 600
-	ballRadius   = 15
+	screenWidth  = 1280
+	screenHeight = 800
+	ballRadius   = 20
 )
 
 func main() {
@@ -31,7 +31,10 @@ func main() {
 			ballSpeedY *= -1
 		}
 
-		rl.DrawCircle(ballX, ballY, ballRadius, rl.Maroon)
+		rl.DrawLine(screenWidth/2, 0, screenWidth/2, screenHeight, rl.White)
+		rl.DrawCircle(screenWidth/2, screenHeight/2, ballRadius, rl.Maroon)
+		rl.DrawRectangle(10, screenHeight/2-60, 25, 120, rl.White)
+		rl.DrawRectangle(screenWidth-35, screenHeight/2-60, 25, 120, rl.White)
 		rl.EndDrawing()
 	}
 
