@@ -28,11 +28,11 @@ func main() {
 		player1.Update()
 		cpu.Update(int(ball.Y))
 
-		if rl.CheckCollisionCircleRec(rl.Vector2{ball.X, ball.Y}, float32(ball.Radius), rl.Rectangle{player1.X, player1.Y, player1.Width, player1.Height}) {
+		if rl.CheckCollisionCircleRec(rl.Vector2{X: ball.X, Y: ball.Y}, float32(ball.Radius), rl.Rectangle{X: player1.X, Y: player1.Y, Width: player1.Width, Height: player1.Height}) {
 			ball.SpeedX = -ball.SpeedX
 		}
 
-		if rl.CheckCollisionCircleRec(rl.Vector2{ball.X, ball.Y}, float32(ball.Radius), rl.Rectangle{cpu.X, cpu.Y, cpu.Width, cpu.Height}) {
+		if rl.CheckCollisionCircleRec(rl.Vector2{X: ball.X, Y: ball.Y}, float32(ball.Radius), rl.Rectangle{X: cpu.X, Y: cpu.Y, Width: cpu.Width, Height: cpu.Height}) {
 			ball.SpeedX = -ball.SpeedX
 		}
 

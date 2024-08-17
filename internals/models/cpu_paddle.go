@@ -1,6 +1,10 @@
 package models
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	"pong/internals/helpers"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type CPUPaddle struct {
 	X      float32
@@ -8,6 +12,18 @@ type CPUPaddle struct {
 	Width  float32
 	Height float32
 	Speed  int32
+}
+
+func (p *CPUPaddle) GetHeight() float32 {
+	return p.Height
+}
+
+func (p *CPUPaddle) GetY() float32 {
+	return p.Y
+}
+
+func (p *CPUPaddle) UpdateY(y float32) {
+	p.Y = y
 }
 
 func NewCPUPaddle(x, y, width, height float32, speed int32) *CPUPaddle {
@@ -27,11 +43,5 @@ func (p *CPUPaddle) Update(ballY int) {
 		p.Y += float32(p.Speed)
 	}
 
-	if p.Y <= 0 {
-		p.Y = 0
-	}
-
-	if p.Y+p.Height >= float32(rl.GetScreenHeight()) {
-		p.Y = float32(rl.GetScreenHeight()) - p.Height
-	}
+	helpers.LimitMovement(p)
 }

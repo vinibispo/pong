@@ -1,6 +1,7 @@
 package models
 
 import rl "github.com/gen2brain/raylib-go/raylib"
+import helpers "pong/internals/helpers"
 
 type Paddle struct {
 	X      float32
@@ -18,6 +19,18 @@ func (p *Paddle) Draw() {
 	rl.DrawRectangle(int32(p.X), int32(p.Y), int32(p.Width), int32(p.Height), rl.White)
 }
 
+func (p *Paddle) GetY() float32 {
+	return float32(p.Y)
+}
+
+func (p *Paddle) GetHeight() float32 {
+	return float32(p.Height)
+}
+
+func (p *Paddle) UpdateY(y float32) {
+	p.Y = y
+}
+
 func (p *Paddle) Update() {
 	if rl.IsKeyDown(rl.KeyUp) {
 		p.Y -= float32(p.Speed)
@@ -26,11 +39,5 @@ func (p *Paddle) Update() {
 		p.Y += float32(p.Speed)
 	}
 
-	if p.Y <= 0 {
-		p.Y = 0
-	}
-
-	if p.Y+p.Height >= float32(rl.GetScreenHeight()) {
-		p.Y = float32(rl.GetScreenHeight()) - p.Height
-	}
+	helpers.LimitMovement(p)
 }
