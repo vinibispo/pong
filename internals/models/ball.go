@@ -1,6 +1,10 @@
 package models
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	"pong/internals/helpers"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type Ball struct {
 	X      float32
@@ -15,10 +19,10 @@ func NewBall(x, y float32, speedX, speedY, radius int) *Ball {
 }
 
 func (b *Ball) Draw() {
-	rl.DrawCircle(int32(b.X), int32(b.Y), float32(b.Radius), rl.Red)
+	rl.DrawCircle(int32(b.X), int32(b.Y), float32(b.Radius), helpers.Yellow)
 }
 
-func (b *Ball) Update() {
+func (b *Ball) Update(playerScore, cpuScore *int) {
 	b.X += float32(b.SpeedX)
 	b.Y += float32(b.SpeedY)
 
@@ -26,7 +30,22 @@ func (b *Ball) Update() {
 		b.SpeedY = -b.SpeedY
 	}
 
-	if b.X+float32(b.Radius) >= float32(rl.GetScreenWidth()) || b.X-float32(b.Radius) <= 0 {
-		b.SpeedX = -b.SpeedX
+	if b.X+float32(b.Radius) >= float32(rl.GetScreenWidth()) {
+		*cpuScore++
+		b.Reset()
 	}
+
+	if b.X-float32(b.Radius) <= 0 {
+		*playerScore++
+		b.Reset()
+	}
+}
+
+func (b *Ball) Reset() {
+	b.X = float32(rl.GetScreenWidth()) / 2
+	b.Y = float32(rl.GetScreenHeight()) / 2
+
+	speedChoices := []int{1, -1}
+	b.SpeedX *= speedChoices[rl.GetRandomValue(0, 1)]
+	b.SpeedY *= speedChoices[rl.GetRandomValue(0, 1)]
 }

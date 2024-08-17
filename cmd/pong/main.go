@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"pong/internals/helpers"
 	"pong/internals/models"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -16,6 +18,8 @@ func main() {
 	rl.InitWindow(screenWidth, screenHeight, "My pong game!")
 	rl.SetTargetFPS(60)
 
+	playerScore := 0
+	cpuScore := 0
 	ball := models.NewBall(screenWidth/2, screenHeight/2, 7, 7, ballRadius)
 	playerWidth := 25
 	playerHeight := 120
@@ -24,7 +28,7 @@ func main() {
 	for !rl.WindowShouldClose() {
 		rl.BeginDrawing()
 
-		ball.Update()
+		ball.Update(&playerScore, &cpuScore)
 		player1.Update()
 		cpu.Update(int(ball.Y))
 
@@ -36,11 +40,15 @@ func main() {
 			ball.SpeedX = -ball.SpeedX
 		}
 
-		rl.ClearBackground(rl.Black)
+		rl.ClearBackground(helpers.DarkGreen)
+		rl.DrawRectangle(screenWidth/2, 0, screenWidth/2, screenHeight, helpers.Green)
+		rl.DrawCircle(screenWidth/2, screenHeight/2, 150, helpers.LightGreen)
 		rl.DrawLine(screenWidth/2, 0, screenWidth/2, screenHeight, rl.White)
 		ball.Draw()
 		cpu.Draw()
 		player1.Draw()
+		rl.DrawText(fmt.Sprint(cpuScore), screenWidth/4-20, 20, 80, rl.White)
+		rl.DrawText(fmt.Sprint(playerScore), 3*screenWidth/4-20, 20, 80, rl.White)
 		rl.EndDrawing()
 	}
 
